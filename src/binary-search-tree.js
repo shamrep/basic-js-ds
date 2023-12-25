@@ -7,40 +7,90 @@ const { Node } = require('../extensions/list-tree.js');
 * using Node from extensions
 */
 class BinarySearchTree {
+  constructor() {
+    this._root = null;
+  }
 
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this._root;
   }
 
-  add(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  add(data) {
+    const addData = function (node, data) {
+      if (!node) return new Node(data);
+
+      if (node.data === data) return node;
+
+      if (node.data < data) {
+        node.right = addData(node.right, data);
+      } else {
+        node.left = addData(node.left, data);
+      }
+
+      return node;
+    };
+
+    this._root = addData(this._root, data);
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  has(data) {
+    const hasData = function (node, data) {
+      if (!node) return false;
+
+      if (node.data === data) return true;
+
+      if (node.data < data) return hasData(node.right, data);
+
+      if (node.data > data) return hasData(node.left, data);
+    };
+
+    return hasData(this._root, data);
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+    const findData = function (node, data) {
+      if (!node) return null;
+
+      if (node.data === data) return node;
+
+      if (node.data < data) {
+        return findData(node.right, data);
+      } else {
+        return findData(node.left, data);
+      }
+    };
+
+    return findData(this._root, data);
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
-
-  min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    const removeData = function (node, data) { 
+      return node;
+    };
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.root) return false;
+
+    let node = this._root;
+
+    while (node.right) {
+      node = node.right;
+    }
+    
+    return node.data;
+  }
+
+  min() {
+    if (!this.root) return false;
+
+    let node = this._root;
+
+    while (node.left) {
+      node = node.left;
+    }
+
+    return node.data;
   }
 }
 
